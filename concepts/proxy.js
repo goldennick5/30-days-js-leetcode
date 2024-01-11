@@ -26,3 +26,23 @@ s.name = "Aruuuzhaaan";
 s.age = 456;
 
 console.log(s);
+
+
+
+const Store = {
+    array: [],
+    isLoading: false,
+}
+
+const proxiedStore = new Proxy(Store, {
+    set(target, property, newValue) {
+        target[property] = newValue;
+        if(property === 'array') {
+            window.dispatchEvent(new Event("app-array-has-been-changed"));
+        }
+        if(property === 'isLoading') {
+            window.dispatchEvent(new Event("app-isLoading-has-been-changed"));
+        }
+        return true;
+    }
+});
